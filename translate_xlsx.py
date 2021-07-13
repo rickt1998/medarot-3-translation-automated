@@ -1,6 +1,5 @@
 import pandas as pd
 from googletrans import Translator
-pd.options.mode.chained_assignment = None  # default='warn'
 
 dfs = pd.read_excel("sheet.xlsx", sheet_name=None)
 
@@ -11,11 +10,9 @@ for sheet_name, df in dfs.items():
         print(sheet_name)
         original = df['Original']
         for row_number, line in enumerate(original):
-            print(line)
             if line == '<FINAL>':
                 break
-            translated = translator.translate(line, dest='ja', src='en')
-            print(translated)
+            translated = translator.translate(line, src='ja', dest='en').text
             df.loc[row_number, 'Translated'] = translated
     except KeyError:
         pass
